@@ -1,0 +1,7 @@
+<div class="navigation-progress" *ngIf="isNavigating | async">
+  <mat-progress-bar mode="buffer"></mat-progress-bar>
+</div>
+<app-masthead></app-masthead>
+<div class="page">
+  <router-outlet></router-outlet>
+</div>

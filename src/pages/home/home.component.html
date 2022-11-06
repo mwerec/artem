@@ -1,0 +1,16 @@
+<div class="posts">
+  <ng-container *ngFor="let post of posts | async">
+    <app-post-preview-box
+      *ngIf="post.preview_file_url"
+      [post]="post"
+    ></app-post-preview-box>
+  </ng-container>
+</div>
+
+<mat-paginator
+  hidePageSize
+  showFirstLastButtons
+  [length]="totalPosts | async"
+  [pageSize]="100"
+  (page)="onPageChange($event.pageIndex)"
+></mat-paginator>

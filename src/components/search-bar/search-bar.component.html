@@ -1,0 +1,35 @@
+<mat-form-field appearance="outline">
+  <mat-label>Browse</mat-label>
+  <mat-chip-list #chipList>
+    <mat-chip
+      *ngFor="let tag of searchSvc.selectedTags | async"
+      (removed)="onTagRemove(tag)"
+    >
+      {{ tag }}
+      <button matChipRemove>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip>
+
+    <input
+      #input
+      matInput
+      [formControl]="query"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="onTagSubmit($event)"
+    />
+  </mat-chip-list>
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    (optionSelected)="onTagAutocomplete($event)"
+  >
+    <mat-option
+      *ngFor="let tag of searchSvc.suggestedTags | async"
+      [value]="tag"
+    >
+      {{ tag }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

@@ -1,0 +1,80 @@
+@import "../../palette";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: $app-background-color;
+  z-index: 100;
+  padding: 20px 20px 0;
+  box-shadow: 0 0 20px 2px $app-background-color;
+
+  .mast {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 500px;
+    max-width: 100%;
+
+    &.shake {
+      animation: shake 550ms cubic-bezier(.36,.07,.19,.97) both;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+
+    .back-btn {
+      position: absolute;
+      right: 100%;
+      margin-right: 14px;
+      margin-bottom: 1.34375em;
+      animation: backBtn 200ms ease-out;
+
+      @keyframes backBtn {
+        from {
+          opacity: 0;
+          transform: translateX(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+    }
+
+    @keyframes shake {
+      10%, 90% {
+        transform: translate3d(-2px, 0, 0);
+      }
+
+      20%, 80% {
+        transform: translate3d(4px, 0, 0);
+      }
+
+      30%, 50%, 70% {
+        transform: translate3d(-8px, 0, 0);
+      }
+
+      40%, 60% {
+        transform: translate3d(8px, 0, 0);
+      }
+    }
+
+    app-search-bar {
+      width: 100%;
+      min-width: 10px;
+    }
+
+    @media (max-width: 650px) {
+      & {
+        width: 100%;
+      }
+
+      .back-btn {
+        position: unset;
+      }
+    }
+  }
+}

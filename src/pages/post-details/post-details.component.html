@@ -1,0 +1,50 @@
+<img *ngIf="!isVideo" [src]="post.large_file_url" class="mat-elevation-z9" />
+<video
+  *ngIf="isVideo"
+  [src]="post.large_file_url"
+  class="mat-elevation-z9"
+  controls
+  autoplay
+  loop
+  [muted]="true"
+></video>
+
+<div class="info">
+  <div matTooltip="Score">
+    <mat-icon>thumbs_up_down</mat-icon><span>{{ post.score }}</span>
+  </div>
+  <div matTooltip="Favorites">
+    <mat-icon>favorite</mat-icon><span>{{ post.fav_count }}</span>
+  </div>
+  <a
+    [href]="post.source"
+    target="_blank"
+    mat-icon-button
+    matTooltip="Open source"
+    color="primary"
+    rel="noopener noreferrer"
+    ><mat-icon>open_in_new</mat-icon></a
+  >
+  <a
+    [href]="post.file_url"
+    target="_blank"
+    mat-icon-button
+    matTooltip="Get the file"
+    color="primary"
+    rel="noopener noreferrer"
+    ><mat-icon>download</mat-icon></a
+  >
+  <div matTooltip="Created at">
+    <mat-icon>event</mat-icon
+    ><span>{{ post.created_at | date: "MMMM d, y, h:mm a" }}</span>
+  </div>
+</div>
+
+<div class="tags">
+  <span>Tags</span>
+  <mat-chip-list>
+    <mat-chip *ngFor="let tag of tags" (click)="onTagClick(tag)">{{
+      tag
+    }}</mat-chip>
+  </mat-chip-list>
+</div>

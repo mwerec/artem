@@ -1,0 +1,8 @@
+<a [routerLink]="['posts', post.id]">
+  <img
+    class="mat-elevation-z6"
+    [class.video]="['mp4', 'webm', 'zip'].includes(post.file_ext)"
+    [src]="post.preview_file_url"
+    [alt]="post.tag_string"
+  />
+</a>

@@ -1,0 +1,63 @@
+@import '../../palette';
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column nowrap;
+  margin-bottom: 50px;
+
+  img,
+  video {
+    margin-bottom: 20px;
+    max-width: 100%;
+  }
+
+  .tags {
+    position: relative;
+    margin: 40px 0 30px;
+    max-width: 1200px;
+
+    > span {
+      position: absolute;
+      top: -9px;
+      left: 15px;
+      font-size: 18px;
+      background-color: $app-background-color;
+      padding: 0 10px;
+    }
+
+    padding: 30px 20px 20px;
+    border: 1px solid #545454;
+  }
+
+  .info {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 14px;
+    margin: 10px 0 20px;
+
+    > * {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #424242;
+      border-radius: 20px;
+      min-height: 40px;
+    }
+
+    > div {
+      gap: 10px;
+      padding: 0 20px;
+
+      > mat-icon {
+        flex-shrink: 0;
+      }
+
+      > span {
+        padding: 5px 0;
+      }
+    }
+  }
+}
