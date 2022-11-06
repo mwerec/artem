@@ -16,6 +16,10 @@ import { RouterModule } from '@angular/router';
             (m) => m.PostDetailsModule
           ),
       },
+      {
+        path: '**',
+        redirectTo: '',
+      },
     ]),
   ],
   exports: [RouterModule],
