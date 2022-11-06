@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { switchMap, take } from 'rxjs';
-import { BooruService } from 'src/services/booru.service';
-import { SearchService } from 'src/services/search.service';
-import { BooruPost } from 'src/types/BooruPost';
+import { BooruService } from '../../shared/services/booru.service';
+import { SearchService } from '../../shared/services/search.service';
+import { BooruPost } from '../../shared/types/BooruPost';
 
 @Injectable()
 export class PostsResolver implements Resolve<BooruPost[]> {

@@ -19,8 +19,8 @@ import {
   switchMap,
   takeUntil,
 } from 'rxjs';
-import { BooruService } from 'src/services/booru.service';
-import { SearchService } from 'src/services/search.service';
+import { BooruService } from '../../../shared/services/booru.service';
+import { SearchService } from '../../../shared/services/search.service';
 
 @Component({
   selector: 'app-search-bar',

@@ -6,7 +6,7 @@ import {
   Router,
 } from '@angular/router';
 import { map, skip } from 'rxjs';
-import { SearchService } from 'src/services/search.service';
+import { SearchService } from '../shared/services/search.service';
 
 @Component({
   selector: 'app-root',

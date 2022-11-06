@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, map, startWith, Subject, takeUntil } from 'rxjs';
-import { SearchService } from 'src/services/search.service';
+import { SearchService } from '../../../shared/services/search.service';
 
 @Component({
   selector: 'app-masthead',
@@ -41,8 +41,9 @@ export class MastheadComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(() => {
         this.renderer.removeClass(this.mastRef.nativeElement, 'shake');
-        setTimeout(() =>
-          this.renderer.addClass(this.mastRef.nativeElement, 'shake')
+        setTimeout(
+          () => this.renderer.addClass(this.mastRef.nativeElement, 'shake'),
+          20 // Firefox workaround
         );
       });
   }

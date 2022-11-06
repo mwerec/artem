@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest, of, startWith, switchMap } from 'rxjs';
-import { BooruService } from 'src/services/booru.service';
-import { SearchService } from 'src/services/search.service';
-import { BooruPost } from 'src/types/BooruPost';
+import { BooruService } from '../shared/services/booru.service';
+import { SearchService } from '../shared/services/search.service';
+import { BooruPost } from '../shared/types/BooruPost';
 
 @Component({
   selector: 'app-home',

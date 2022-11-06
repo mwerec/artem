@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
-import { BooruPost } from 'src/types/BooruPost';
+import { BooruPost } from '../types/BooruPost';
 
 @Injectable({
   providedIn: 'root',
