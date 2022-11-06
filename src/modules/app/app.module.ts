@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [AppComponent, SearchBarComponent, MastheadComponent],
@@ -29,6 +30,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatProgressBarModule,
     MatButtonModule,
+    MatTooltipModule,
   ],
   bootstrap: [AppComponent],
 })

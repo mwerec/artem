@@ -6,6 +6,7 @@ import { PostDetailsComponent } from './post-details.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatChipsModule,
     MatIconModule,
     MatButtonModule,
+    MatTooltipModule,
   ],
   declarations: [PostDetailsComponent],
   providers: [PostResolver],
