@@ -11,4 +11,5 @@ export interface BooruPost {
   fav_count: number;
   score: number;
   created_at: string;
+  pixiv_id: number;
 }
