@@ -17,7 +17,11 @@
     <mat-icon>favorite</mat-icon><span>{{ post.fav_count }}</span>
   </div>
   <a
-    [href]="post.source"
+    [href]="
+      post.pixiv_id
+        ? 'https://www.pixiv.net/artworks/' + post.pixiv_id
+        : post.source
+    "
     target="_blank"
     mat-icon-button
     matTooltip="Open source"
