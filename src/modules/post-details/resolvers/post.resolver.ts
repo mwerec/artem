@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
-import { catchError, EMPTY } from 'rxjs';
-import { SearchService } from 'src/modules/shared/services/search.service';
-import { BooruService } from '../../shared/services/booru.service';
-import { BooruPost } from '../../shared/types/BooruPost';
+import { catchError, EMPTY, tap } from 'rxjs';
+import { SearchService } from '@modules/shared/services/search.service';
+import { SettingsService } from '@modules/shared/services/settings.service';
+import { BooruService } from '@modules/shared/services/booru.service';
+import { BooruPost } from '@modules/shared/types/BooruPost';
 
 @Injectable()
 export class PostResolver implements Resolve<BooruPost> {
@@ -12,21 +13,30 @@ export class PostResolver implements Resolve<BooruPost> {
     private booruSvc: BooruService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private searchSvc: SearchService
+    private searchSvc: SearchService,
+    private settingsSvc: SettingsService
   ) {}
 
   resolve(route: ActivatedRouteSnapshot) {
     const id = route.paramMap.get('id')!;
     return this.booruSvc.getPost(id).pipe(
+      tap((res) => {
+        if (!this.settingsSvc.get('safeSearch') || res.rating === 'g') return;
+        this.handleError(`Post ${id} blocked by safe search.`);
+      }),
       catchError(() => {
-        this.router.navigate([''], {
-          queryParams: { tag: this.searchSvc.getSelectedTags() },
-        });
-        this.snackBar.open(`Unable to load post ${id}.`, null, {
-          duration: 3000,
-        });
+        this.handleError(`Unable to load post ${id}.`);
         return EMPTY;
       })
     );
+  }
+
+  handleError(message: string) {
+    this.router.navigate([''], {
+      queryParams: { tag: this.searchSvc.getSelectedTags() },
+    });
+    this.snackBar.open(message, null, {
+      duration: 3000,
+    });
   }
 }

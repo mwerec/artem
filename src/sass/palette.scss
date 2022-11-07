@@ -2,9 +2,35 @@
 
 $primary: mat.define-palette(mat.$orange-palette);
 $accent: mat.define-palette(mat.$brown-palette);
-$theme: mat.define-dark-theme((
-  color: (primary: $primary, accent: $accent),
-));
+$warn: mat.define-palette(mat.$red-palette);
+$theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+  )
+);
 
-$app-background-color: #212121;
+$app-background-color: #212121; // TODO: maybe #221c30 after slight redesign?
 $app-text-color: white;
+
+@mixin mobile {
+  @media (max-width: 650px) {
+    @content;
+  }
+}
+
+@mixin app-backdrop-blur($prefix: ".app-backdrop-blur", $suffix: "") {
+  #{$prefix} {
+    &-base#{$suffix} {
+      background-color: $app-background-color;
+    }
+
+    &__enabled#{$suffix} {
+      background-color: rgba($app-background-color, 0.95);
+      backdrop-filter: blur(8px);
+    }
+  }
+}

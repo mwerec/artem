@@ -15,7 +15,7 @@ export class BooruService {
     return this.http.get<BooruPost[]>(`${this.hostname}/posts.json`, {
       params: {
         page,
-        'post[tags]': `rating:g ${tags.join(' ')}`,
+        'post[tags]': tags.filter(Boolean).join(' '),
         limit: 100,
       },
     });
@@ -29,7 +29,7 @@ export class BooruService {
     return this.http
       .get<{ counts: { posts: number } }>(
         `${this.hostname}/counts/posts.json`,
-        { params: { tags: `rating:g ${tags.join(' ')}` } }
+        { params: { tags: tags.filter(Boolean).join(' ') } }
       )
       .pipe(
         // Danbooru API limitations, cant go past page 1000

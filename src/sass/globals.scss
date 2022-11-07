@@ -19,6 +19,9 @@ app-root {
   min-height: 100vh;
 }
 
+@include app-backdrop-blur;
+@include app-backdrop-blur('.app-dialog-backdrop-blur', ' mat-dialog-container');
+
 * {
   box-sizing: border-box;
 }

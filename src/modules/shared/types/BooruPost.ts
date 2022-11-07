@@ -12,4 +12,5 @@ export interface BooruPost {
   score: number;
   created_at: string;
   pixiv_id: number;
+  rating: string;
 }

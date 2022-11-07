@@ -8,9 +8,10 @@
 </div>
 
 <mat-paginator
+  appBackdropBlur
   hidePageSize
   showFirstLastButtons
-  [length]="totalPosts | async"
+  [length]="length | async"
   [pageSize]="100"
   (page)="onPageChange($event.pageIndex)"
 ></mat-paginator>

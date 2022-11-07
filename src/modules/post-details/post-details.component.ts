@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SearchService } from '../shared/services/search.service';
-import { BooruPost } from '../shared/types/BooruPost';
+import { SearchService } from '@modules/shared/services/search.service';
+import { BooruPost } from '@modules/shared/types/BooruPost';
 
 @Component({
   selector: 'app-post-details',

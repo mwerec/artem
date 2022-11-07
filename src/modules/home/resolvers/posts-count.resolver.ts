@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { switchMap, take } from 'rxjs';
-import { BooruService } from '../../shared/services/booru.service';
-import { SearchService } from '../../shared/services/search.service';
+import { SettingsService } from '@modules/shared/services/settings.service';
+import { BooruService } from '@modules/shared/services/booru.service';
+import { SearchService } from '@modules/shared/services/search.service';
 
 @Injectable()
 export class PostsCountResolver implements Resolve<number> {
   constructor(
     private searchSvc: SearchService,
-    private booruSvc: BooruService
+    private booruSvc: BooruService,
+    private settingsSvc: SettingsService
   ) {}
 
   resolve() {
-    return this.searchSvc.selectedTags.pipe(
-      switchMap((tags) => this.booruSvc.getPostsCount(tags)),
-      take(1)
-    );
+    const tags = this.searchSvc.getSelectedTags();
+    const safeSearch = this.settingsSvc.get('safeSearch');
+    return this.booruSvc.getPostsCount([safeSearch && 'rating:g', ...tags]);
   }
 }

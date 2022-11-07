@@ -7,12 +7,12 @@ import { RouterModule } from '@angular/router';
       {
         path: '',
         loadChildren: () =>
-          import('../home/home.module').then((m) => m.HomeModule),
+          import('@modules/home/home.module').then((m) => m.HomeModule),
       },
       {
         path: 'posts/:id',
         loadChildren: () =>
-          import('../post-details/post-details.module').then(
+          import('@modules/post-details/post-details.module').then(
             (m) => m.PostDetailsModule
           ),
       },

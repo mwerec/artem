@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { BooruPost } from '../../../shared/types/BooruPost';
+import { BooruPost } from '@modules/shared/types/BooruPost';
 
 @Component({
   selector: 'app-post-preview-box',

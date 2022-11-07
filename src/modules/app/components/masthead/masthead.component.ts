@@ -9,7 +9,8 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, map, startWith, Subject, takeUntil } from 'rxjs';
-import { SearchService } from '../../../shared/services/search.service';
+import { SettingsService } from '@modules/shared/services/settings.service';
+import { SearchService } from '@modules/shared/services/search.service';
 
 @Component({
   selector: 'app-masthead',
@@ -26,6 +27,7 @@ export class MastheadComponent implements OnInit, OnDestroy {
       return url !== '/' && !url.startsWith('/?');
     })
   );
+  openingSettings = new Subject<boolean>();
   unsubscribe = new Subject<void>();
 
   @ViewChild('mast') mastRef: ElementRef<HTMLDivElement>;
@@ -33,7 +35,8 @@ export class MastheadComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     public searchSvc: SearchService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private settingsSvc: SettingsService
   ) {}
 
   ngOnInit() {
@@ -46,6 +49,12 @@ export class MastheadComponent implements OnInit, OnDestroy {
           20 // Firefox workaround
         );
       });
+  }
+
+  async openSettings() {
+    this.openingSettings.next(true);
+    await this.settingsSvc.open();
+    this.openingSettings.next(false);
   }
 
   ngOnDestroy() {

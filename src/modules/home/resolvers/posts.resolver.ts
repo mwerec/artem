@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { switchMap, take } from 'rxjs';
-import { BooruService } from '../../shared/services/booru.service';
-import { SearchService } from '../../shared/services/search.service';
-import { BooruPost } from '../../shared/types/BooruPost';
+import { SettingsService } from '@modules/shared/services/settings.service';
+import { BooruService } from '@modules/shared/services/booru.service';
+import { SearchService } from '@modules/shared/services/search.service';
+import { BooruPost } from '@modules/shared/types/BooruPost';
 
 @Injectable()
 export class PostsResolver implements Resolve<BooruPost[]> {
   constructor(
     private searchSvc: SearchService,
+    private settingsSvc: SettingsService,
     private booruSvc: BooruService
   ) {}
 
   resolve() {
-    return this.searchSvc.selectedTags.pipe(
-      switchMap((tags) => this.booruSvc.getPosts(tags)),
-      take(1)
-    );
+    const tags = this.searchSvc.getSelectedTags();
+    const safeSearch = this.settingsSvc.get('safeSearch');
+    return this.booruSvc.getPosts([safeSearch && 'rating:g', ...tags]);
   }
 }

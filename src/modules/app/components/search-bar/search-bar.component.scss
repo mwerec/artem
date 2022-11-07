@@ -1,8 +1,18 @@
+@import 'palette';
+
 :host {
   position: relative;
 
   mat-form-field {
     width: 100%;
+  }
+
+  @include mobile {
+    mat-chip-list {
+      display: flex;
+      flex-direction: column;
+      padding-right: 36px;
+    }
   }
 }
 

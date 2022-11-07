@@ -1,14 +1,28 @@
-<div class="mast" #mast>
-  <div class="back-btn" *ngIf="canGoBack | async">
-    <a
-      mat-icon-button
-      color="primary"
-      routerLink=""
-      [queryParams]="{ tag: searchSvc.selectedTags | async }"
-      matTooltip="Go back"
-    >
-      <mat-icon>arrow_back</mat-icon>
-    </a>
+<div class="masthead" appBackdropBlur>
+  <div class="mast" #mast>
+    <div class="back action" *ngIf="canGoBack | async">
+      <a
+        mat-icon-button
+        color="primary"
+        routerLink=""
+        [queryParams]="{ tag: searchSvc.selectedTags | async }"
+        matTooltip="Go back"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </a>
+    </div>
+    <app-search-bar></app-search-bar>
   </div>
-  <app-search-bar></app-search-bar>
+  <div class="settings action">
+    <mat-spinner
+      *ngIf="openingSettings | async; else settingsBtn"
+      [diameter]="24"
+      [strokeWidth]="4"
+    ></mat-spinner>
+    <ng-template #settingsBtn>
+      <a mat-icon-button (click)="openSettings()" matTooltip="Settings"
+        ><mat-icon>settings</mat-icon></a
+      >
+    </ng-template>
+  </div>
 </div>

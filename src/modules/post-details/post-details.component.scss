@@ -6,16 +6,16 @@
   align-items: center;
   flex-flow: column nowrap;
   margin-bottom: 50px;
+  flex: 1;
 
   img,
   video {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     max-width: 100%;
   }
 
   .tags {
     position: relative;
-    margin: 40px 0 30px;
     max-width: 1200px;
 
     > span {
@@ -36,7 +36,7 @@
     flex-flow: row wrap;
     justify-content: center;
     gap: 14px;
-    margin: 10px 0 20px;
+    margin-bottom: 60px;
 
     > * {
       display: flex;
