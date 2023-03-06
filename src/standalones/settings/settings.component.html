@@ -19,18 +19,42 @@
   <form [formGroup]="settingsSvc.form">
     <section>
       <div class="section-name">Search</div>
-      <mat-slide-toggle
-        color="primary"
-        [checked]="safeSearchChecked | async"
-        (click)="onSafeSearchClick($event)"
-        >Safe search</mat-slide-toggle
-      >
+      <div class="options">
+        <mat-slide-toggle
+          color="primary"
+          [checked]="safeSearchChecked | async"
+          (click)="onSafeSearchClick($event)"
+          >Safe search</mat-slide-toggle
+        >
+      </div>
     </section>
     <section>
       <div class="section-name">Interface</div>
-      <mat-slide-toggle color="primary" formControlName="blurEffect"
-        >Overlay backdrop blur</mat-slide-toggle
-      >
+      <div class="options">
+        <mat-slide-toggle color="primary" formControlName="blurEffect"
+          >Overlay backdrop blur</mat-slide-toggle
+        >
+        <div>
+          <span class="option-name">Preview format</span>
+          <mat-radio-group formControlName="previewFormat" color="primary">
+            <mat-radio-button value="square">Square</mat-radio-button>
+            <mat-radio-button value="fit">Fit</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div *ngIf="settingsSvc.get('previewFormat') === 'square'">
+          <span class="option-name">Preview scale</span>
+          <mat-slider
+            thumbLabel
+            formControlName="previewScale"
+            color="primary"
+            [min]="0.75"
+            [max]="2"
+            [step]="0.25"
+            [displayWith]="formatPreviewScaleLabel"
+          >
+          </mat-slider>
+        </div>
+      </div>
     </section>
   </form>
 </div>
@@ -41,8 +65,8 @@
     <div class="warning-content">
       <p>Are you sure you want to disable safe search?</p>
       <p>
-        When safe search is off, you'll see NSFW explicit pictures of
-        violence and pornography.
+        When safe search is off, you'll see NSFW explicit pictures of violence
+        and pornography.
       </p>
       <p>
         Most weebs have some sort of brain tumor and there is a high risk that,

@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import {
   ActivationStart,
   ResolveStart,
@@ -7,6 +13,7 @@ import {
 } from '@angular/router';
 import { map, skip } from 'rxjs';
 import { SearchService } from '@modules/shared/services/search.service';
+import { SettingsService } from '@modules/shared/services/settings.service';
 
 @Component({
   selector: 'app-root',
@@ -24,11 +31,21 @@ export class AppComponent implements OnInit {
     )
   );
 
-  constructor(private router: Router, private searchSvc: SearchService) {}
+  constructor(
+    private router: Router,
+    private searchSvc: SearchService,
+    private settingsSvc: SettingsService,
+    private renderer: Renderer2,
+    private elementRef: ElementRef
+  ) {}
 
   ngOnInit() {
     this.searchSvc.selectedTags.pipe(skip(1)).subscribe((tags) => {
       this.router.navigate([''], { queryParams: { tag: tags } });
+    });
+
+    this.settingsSvc.listen('previewScale').subscribe((scale) => {
+      this.renderer.setStyle(this.elementRef.nativeElement, '--app-preview-scale', scale, 2)
     });
   }
 }

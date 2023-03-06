@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { SettingsService } from '@modules/shared/services/settings.service';
 import { BooruPost } from '@modules/shared/types/BooruPost';
 
 @Component({
@@ -9,4 +10,7 @@ import { BooruPost } from '@modules/shared/types/BooruPost';
 })
 export class PostPreviewBoxComponent {
   @Input() post: BooruPost;
+  format = this.settingsSvc.listen('previewFormat');
+
+  constructor(private settingsSvc: SettingsService) {}
 }

@@ -8,6 +8,10 @@
     flex-flow: row wrap;
     gap: 10px;
     margin-bottom: 50px;
+
+    &.centered {
+      justify-content: center;
+    }
   }
 
   mat-paginator {

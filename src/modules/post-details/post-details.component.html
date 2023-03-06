@@ -1,4 +1,9 @@
-<img *ngIf="!isVideo" [src]="post.large_file_url" class="mat-elevation-z9" />
+<h2 *ngIf="!post.large_file_url">File not available</h2>
+<img
+  *ngIf="!isVideo"
+  [src]="post.large_file_url || 'assets/not-found.png'"
+  class="mat-elevation-z9"
+/>
 <video
   *ngIf="isVideo"
   [src]="post.large_file_url"
@@ -40,7 +45,7 @@
   >
   <div matTooltip="Created at">
     <mat-icon>event</mat-icon
-    ><span>{{ post.created_at | date: "MMMM d, y, h:mm a" }}</span>
+    ><span>{{ post.created_at | date : "MMMM d, y, h:mm a" }}</span>
   </div>
 </div>
 

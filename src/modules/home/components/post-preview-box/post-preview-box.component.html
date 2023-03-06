@@ -1,8 +1,8 @@
-<a [routerLink]="['posts', post.id]">
+<a [routerLink]="['posts', post.id]" [ngClass]="format | async">
   <img
     class="mat-elevation-z6"
     [class.video]="['mp4', 'webm', 'zip'].includes(post.file_ext)"
-    [src]="post.preview_file_url"
+    [src]="post.preview_file_url || 'assets/not-found.png'"
     [alt]="post.tag_string"
   />
 </a>

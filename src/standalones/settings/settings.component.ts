@@ -26,6 +26,8 @@ import { SharedModule } from '@modules/shared/shared.module';
 import { SettingsService } from '@modules/shared/services/settings.service';
 import { SettingsDialogRef } from './classes/settings-dialog-ref';
 import { Overlay, OverlayModule } from '@angular/cdk/overlay';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSliderModule } from '@angular/material/slider';
 
 @Component({
   selector: 'app-settings',
@@ -38,7 +40,9 @@ import { Overlay, OverlayModule } from '@angular/cdk/overlay';
     MatIconModule,
     SharedModule,
     MatButtonModule,
+    MatSliderModule,
     MatCheckboxModule,
+    MatRadioModule,
     OverlayModule,
   ],
   templateUrl: './settings.component.html',
@@ -110,6 +114,10 @@ export class SettingsComponent {
           localStorage.setItem('safeSearchWarningDisabled', 'Y');
         }
       });
+  }
+
+  formatPreviewScaleLabel(value: number) {
+    return value * 100 + '%';
   }
 
   // that's really unprofessional and i feel ashamed

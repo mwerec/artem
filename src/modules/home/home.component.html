@@ -1,7 +1,6 @@
-<div class="posts">
+<div class="posts" [class.centered]="isListCentered | async">
   <ng-container *ngFor="let post of posts | async">
     <app-post-preview-box
-      *ngIf="post.preview_file_url"
       [post]="post"
     ></app-post-preview-box>
   </ng-container>
