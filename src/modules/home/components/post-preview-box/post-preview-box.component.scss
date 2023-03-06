@@ -6,10 +6,20 @@ a {
     filter: brightness(70%);
   }
 
+  &.square img {
+    width: calc(120px * var(--app-preview-scale));
+    height: calc(120px * var(--app-preview-scale));
+    object-fit: cover;
+  }
+
+  &.fit img {
+    width: 100%;
+    max-height: 150px;
+  }
+
   img {
     position: relative;
-    max-width: 100%;
-    max-height: 150px;
+    background-color: #2f2f2f;
 
     &.video {
       border: 3px solid green;

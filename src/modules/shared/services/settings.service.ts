@@ -19,6 +19,8 @@ export class SettingsService implements OnDestroy {
   ) {
     this.listen('safeSearch').subscribe((v) => (this.safeSearch = v));
     this.listen('blurEffect').subscribe((v) => (this.blurEffect = v));
+    this.listen('previewFormat').subscribe((v) => (this.previewFormat = v));
+    this.listen('previewScale').subscribe((v) => (this.previewScale = v));
   }
 
   set(value: Partial<Settings>) {
@@ -84,11 +86,21 @@ export class SettingsService implements OnDestroy {
     else localStorage.removeItem('blurEffect');
   }
 
-  private get initialSettings(): Settings {
+  private set previewFormat(value: Settings['previewFormat']) {
+    localStorage.setItem('previewFormat', value);
+  }
+
+  private set previewScale(value: Settings['previewScale']) {
+    localStorage.setItem('previewScale', value.toString());
+  }
+
+  private get initialSettings() {
     return {
       safeSearch: !sessionStorage.getItem('safeSearch'),
       blurEffect: !localStorage.getItem('blurEffect'),
-    };
+      previewFormat: localStorage.getItem('previewFormat') || 'square',
+      previewScale: +localStorage.getItem('previewScale') || 1
+    } as Settings;
   }
 
   ngOnDestroy() {

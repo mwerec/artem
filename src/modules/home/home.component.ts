@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import {
   BehaviorSubject,
   combineLatest,
-  distinctUntilKeyChanged,
+  map,
   skip,
   Subject,
   switchMap,
@@ -34,6 +34,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   abortPageRequest = new Subject<void>();
   abortCountRequest = new Subject<void>();
   unsubscribe = new Subject<void>();
+  isListCentered = this.settingsSvc
+    .listen('previewFormat')
+    .pipe(map((format) => format === 'square'));
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
