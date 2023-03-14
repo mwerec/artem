@@ -4,6 +4,12 @@
 @include mat.core();
 @include mat.all-component-themes($theme);
 
+@include frosted-effect-core();
+
+:root {
+  --app-preview-scale: 1;
+}
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -18,9 +24,6 @@ app-root {
   flex-direction: column;
   min-height: 100vh;
 }
-
-@include app-backdrop-blur;
-@include app-backdrop-blur('.app-dialog-backdrop-blur', ' mat-dialog-container');
 
 * {
   box-sizing: border-box;

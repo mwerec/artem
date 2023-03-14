@@ -32,15 +32,17 @@
     matTooltip="Open source"
     color="primary"
     rel="noopener noreferrer"
+    [disabled]="!post.pixiv_id && !post.source"
     ><mat-icon>open_in_new</mat-icon></a
   >
   <a
-    [href]="post.file_url"
+    [href]="post.file_url || post.source"
     target="_blank"
     mat-icon-button
     matTooltip="Get the file"
     color="primary"
     rel="noopener noreferrer"
+    [disabled]="!post.file_url && !post.source"
     ><mat-icon>download</mat-icon></a
   >
   <div matTooltip="Created at">
@@ -51,9 +53,9 @@
 
 <div class="tags">
   <span>Tags</span>
-  <mat-chip-list>
+  <mat-chip-listbox>
     <mat-chip *ngFor="let tag of tags" (click)="onTagClick(tag)">{{
       tag
     }}</mat-chip>
-  </mat-chip-list>
+  </mat-chip-listbox>
 </div>

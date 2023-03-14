@@ -17,9 +17,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { SharedModule } from '@modules/shared/shared.module';
+import { SettingsTriggerComponent } from './components/settings-trigger/settings-trigger.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
-  declarations: [AppComponent, SearchBarComponent, MastheadComponent],
+  declarations: [
+    AppComponent,
+    SearchBarComponent,
+    MastheadComponent,
+    SettingsTriggerComponent,
+  ],
   imports: [
     AppRoutingModule,
     BrowserModule,
@@ -32,6 +39,7 @@ import { SharedModule } from '@modules/shared/shared.module';
     MatIconModule,
     MatFormFieldModule,
     MatProgressBarModule,
+    MatPaginatorModule,
     MatButtonModule,
     MatTooltipModule,
     OverlayModule,

@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  Inject,
   OnInit,
   Renderer2,
 } from '@angular/core';
@@ -11,9 +12,9 @@ import {
   RouteConfigLoadStart,
   Router,
 } from '@angular/router';
-import { map, skip } from 'rxjs';
-import { SearchService } from '@modules/shared/services/search.service';
+import { map } from 'rxjs';
 import { SettingsService } from '@modules/shared/services/settings.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -33,19 +34,27 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private searchSvc: SearchService,
     private settingsSvc: SettingsService,
     private renderer: Renderer2,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   ngOnInit() {
-    this.searchSvc.selectedTags.pipe(skip(1)).subscribe((tags) => {
-      this.router.navigate([''], { queryParams: { tag: tags } });
+    this.settingsSvc.listen('previewScale').subscribe((scale) => {
+      this.renderer.setStyle(
+        this.elementRef.nativeElement,
+        '--app-preview-scale',
+        scale === 1 ? null : scale,
+        2
+      );
     });
 
-    this.settingsSvc.listen('previewScale').subscribe((scale) => {
-      this.renderer.setStyle(this.elementRef.nativeElement, '--app-preview-scale', scale, 2)
+    this.settingsSvc.listen('blurEffect').subscribe((enabled) => {
+      const args = [this.document.body, 'app-frosted-effects', ''] as const;
+
+      if (enabled) this.renderer.setAttribute(...args);
+      else this.renderer.removeAttribute(...args);
     });
   }
 }

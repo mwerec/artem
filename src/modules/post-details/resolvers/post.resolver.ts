@@ -1,42 +1,37 @@
-import { Injectable } from '@angular/core';
+import { inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
+import { ResolveFn, Router } from '@angular/router';
 import { catchError, EMPTY, tap } from 'rxjs';
-import { SearchService } from '@modules/shared/services/search.service';
 import { SettingsService } from '@modules/shared/services/settings.service';
 import { BooruService } from '@modules/shared/services/booru.service';
 import { BooruPost } from '@modules/shared/types/BooruPost';
+import { TagsService } from '@modules/shared/services/tags.service';
 
-@Injectable()
-export class PostResolver implements Resolve<BooruPost> {
-  constructor(
-    private booruSvc: BooruService,
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private searchSvc: SearchService,
-    private settingsSvc: SettingsService
-  ) {}
+export const postResolver: ResolveFn<BooruPost> = (route) => {
+  const router = inject(Router);
+  const snackBar = inject(MatSnackBar);
+  const booruSvc = inject(BooruService);
+  const settingsSvc = inject(SettingsService);
+  const tagsSvc = inject(TagsService);
 
-  resolve(route: ActivatedRouteSnapshot) {
-    const id = route.paramMap.get('id')!;
-    return this.booruSvc.getPost(id).pipe(
-      tap((res) => {
-        if (!this.settingsSvc.get('safeSearch') || res.rating === 'g') return;
-        this.handleError(`Post ${id} blocked by safe search.`);
-      }),
-      catchError(() => {
-        this.handleError(`Unable to load post ${id}.`);
-        return EMPTY;
-      })
-    );
-  }
-
-  handleError(message: string) {
-    this.router.navigate([''], {
-      queryParams: { tag: this.searchSvc.getSelectedTags() },
+  const handleError = (message: string) => {
+    router.navigate([''], {
+      queryParams: { tag: tagsSvc.getSelectedTags() },
     });
-    this.snackBar.open(message, null, {
+    snackBar.open(message, null, {
       duration: 3000,
     });
-  }
-}
+  };
+
+  const id = route.paramMap.get('id')!;
+  return booruSvc.getPost(id).pipe(
+    tap((res) => {
+      if (!settingsSvc.get('safeSearch') || res.rating === 'g') return;
+      handleError(`Post ${id} blocked by safe search.`);
+    }),
+    catchError(() => {
+      handleError(`Unable to load post ${id}.`);
+      return EMPTY;
+    })
+  );
+};

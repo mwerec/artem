@@ -20,7 +20,7 @@ import {
   takeUntil,
 } from 'rxjs';
 import { BooruService } from '@modules/shared/services/booru.service';
-import { SearchService } from '@modules/shared/services/search.service';
+import { TagsService } from '@modules/shared/services/tags.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -38,7 +38,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private booruSvc: BooruService,
-    public searchSvc: SearchService
+    public tagsSvc: TagsService
   ) {}
 
   ngOnInit() {
@@ -52,9 +52,9 @@ export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
         }),
         takeUntil(this.unsubscribe)
       )
-      .subscribe((tags) => this.searchSvc.updateSuggestedTags(tags));
+      .subscribe((tags) => this.tagsSvc.updateSuggestedTags(tags));
 
-    this.searchSvc.selectedTags
+    this.tagsSvc.selectedTags
       .pipe(takeUntil(this.unsubscribe))
       .subscribe((tags) => {
         if (tags.length > 1) return this.query.disable();
@@ -63,11 +63,11 @@ export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (this.searchSvc.getSelectedTags().length > 1) this.query.disable();
+    if (this.tagsSvc.getSelectedTags().length > 1) this.query.disable();
   }
 
   onTagSubmit(event: MatChipInputEvent) {
-    if (!this.searchSvc.getSuggestedTags().includes(event.value)) return;
+    if (!this.tagsSvc.getSuggestedTags().includes(event.value)) return;
     this.addTag(event.value);
     event.chipInput.clear();
   }
@@ -78,11 +78,11 @@ export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onTagRemove(tag: string) {
-    this.searchSvc.removeTag(tag);
+    this.tagsSvc.removeTag(tag);
   }
 
   addTag(tag: string) {
-    this.searchSvc.addTag(tag);
+    this.tagsSvc.addTag(tag);
     this.query.setValue('');
   }
 

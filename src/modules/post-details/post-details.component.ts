@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SearchService } from '@modules/shared/services/search.service';
+import { TagsService } from '@modules/shared/services/tags.service';
 import { BooruPost } from '@modules/shared/types/BooruPost';
 
 @Component({
@@ -14,12 +14,9 @@ export class PostDetailsComponent {
   tags = this.post.tag_string.split(' ');
   isVideo = ['mp4', 'webm', 'zip'].includes(this.post.file_ext);
 
-  constructor(
-    private route: ActivatedRoute,
-    private searchSvc: SearchService
-  ) {}
+  constructor(private route: ActivatedRoute, private tagsSvc: TagsService) {}
 
   onTagClick(tag: string) {
-    this.searchSvc.addTag(tag);
+    this.tagsSvc.addTag(tag);
   }
 }

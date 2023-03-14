@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PostResolver } from './resolvers/post.resolver';
+import { postResolver } from './resolvers/post.resolver';
 import { PostDetailsComponent } from './post-details.component';
 
 @NgModule({
@@ -9,7 +9,7 @@ import { PostDetailsComponent } from './post-details.component';
       {
         path: '',
         component: PostDetailsComponent,
-        resolve: { post: PostResolver },
+        resolve: { post: postResolver }
       },
     ]),
   ],

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
-import { PostsCountResolver } from './resolvers/posts-count.resolver';
-import { PostsResolver } from './resolvers/posts.resolver';
+import { postsCountResolver } from './resolvers/posts-count.resolver';
+import { postsResolver } from './resolvers/posts.resolver';
 
 @NgModule({
   imports: [
@@ -10,7 +10,7 @@ import { PostsResolver } from './resolvers/posts.resolver';
       {
         path: '',
         component: HomeComponent,
-        resolve: { posts: PostsResolver, postsCount: PostsCountResolver },
+        resolve: { posts: postsResolver, postsCount: postsCountResolver },
       },
     ]),
   ],

@@ -1,34 +1,35 @@
-<mat-form-field appearance="outline">
+<mat-form-field
+  appearance="outline"
+  subscriptSizing="dynamic"
+  (click)="input.focus()"
+>
   <mat-label>Browse</mat-label>
-  <mat-chip-list #chipList>
-    <mat-chip
-      *ngFor="let tag of searchSvc.selectedTags | async"
+  <mat-chip-grid #chipGrid>
+    <mat-chip-row
+      *ngFor="let tag of tagsSvc.selectedTags | async"
+      (click)="$event.stopPropagation()"
       (removed)="onTagRemove(tag)"
     >
       {{ tag }}
       <button matChipRemove>
         <mat-icon>cancel</mat-icon>
       </button>
-    </mat-chip>
-
+    </mat-chip-row>
     <input
       #input
       matInput
       [formControl]="query"
       [matAutocomplete]="auto"
-      [matChipInputFor]="chipList"
+      [matChipInputFor]="chipGrid"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
       (matChipInputTokenEnd)="onTagSubmit($event)"
     />
-  </mat-chip-list>
+  </mat-chip-grid>
   <mat-autocomplete
     #auto="matAutocomplete"
     (optionSelected)="onTagAutocomplete($event)"
   >
-    <mat-option
-      *ngFor="let tag of searchSvc.suggestedTags | async"
-      [value]="tag"
-    >
+    <mat-option *ngFor="let tag of tagsSvc.suggestedTags | async" [value]="tag">
       {{ tag }}
     </mat-option>
   </mat-autocomplete>

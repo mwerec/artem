@@ -1,28 +1,89 @@
-<div class="masthead" appBackdropBlur>
-  <div class="mast" #mast>
-    <div class="back action" *ngIf="canGoBack | async">
-      <a
-        mat-icon-button
-        color="primary"
-        routerLink=""
-        [queryParams]="{ tag: searchSvc.selectedTags | async }"
-        matTooltip="Go back"
-      >
-        <mat-icon>arrow_back</mat-icon>
-      </a>
-    </div>
+<div class="masthead" appFrostedEffect>
+  <div class="mast">
+    <ng-container *ngTemplateOutlet="controls | async"></ng-container>
     <app-search-bar></app-search-bar>
   </div>
-  <div class="settings action">
-    <mat-spinner
-      *ngIf="openingSettings | async; else settingsBtn"
-      [diameter]="24"
-      [strokeWidth]="4"
-    ></mat-spinner>
-    <ng-template #settingsBtn>
-      <a mat-icon-button (click)="openSettings()" matTooltip="Settings"
-        ><mat-icon>settings</mat-icon></a
-      >
-    </ng-template>
-  </div>
 </div>
+
+<ng-template #backBtn>
+  <div class="before">
+    <a
+      appFrostedEffect
+      mat-icon-button
+      color="primary"
+      class="float-shadow"
+      routerLink=""
+      [queryParams]="searchSvc.lastSearch | async"
+      matTooltip="Go back"
+      matTooltipPosition="before"
+      [matTooltipShowDelay]="750"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </a>
+  </div>
+</ng-template>
+
+<ng-template #paginator>
+  <div class="before">
+    <button
+      appFrostedEffect
+      mat-icon-button
+      class="float-shadow first-page-btn"
+      (click)="paginatorSvc.setPage(1)"
+      [disabled]="paginatorSvc.isFirstPage | async"
+      matTooltip="First page"
+      matTooltipPosition="before"
+      [matTooltipShowDelay]="750"
+    >
+      <mat-icon>first_page</mat-icon>
+    </button>
+    <button
+      appFrostedEffect
+      mat-icon-button
+      class="float-shadow"
+      (click)="paginatorSvc.incrementPage(-1)"
+      [disabled]="paginatorSvc.isFirstPage | async"
+      matTooltip="Previous page"
+      [matTooltipShowDelay]="750"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+  </div>
+  <div class="after">
+    <button
+      appFrostedEffect
+      mat-icon-button
+      class="float-shadow"
+      (click)="paginatorSvc.incrementPage(1)"
+      [disabled]="paginatorSvc.isLastPage | async"
+      matTooltip="Next page"
+      [matTooltipShowDelay]="750"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+    <button
+      appFrostedEffect
+      mat-icon-button
+      class="float-shadow last-page-btn"
+      (click)="paginatorSvc.setLastPage()"
+      [disabled]="paginatorSvc.isLastPage | async"
+      matTooltip="Last page"
+      matTooltipPosition="after"
+      [matTooltipShowDelay]="750"
+    >
+      <mat-icon>last_page</mat-icon>
+    </button>
+  </div>
+
+  <div class="below">
+    <div
+      class="float-shadow paginator-state"
+      appFrostedEffect
+      [matTooltip]="paginatorTooltipInfo | async"
+      matTooltipPosition="below"
+      [matTooltipShowDelay]="750"
+    >
+      {{ paginatorInfo | async }}
+    </div>
+  </div>
+</ng-template>

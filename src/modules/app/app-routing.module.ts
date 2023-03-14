@@ -6,15 +6,11 @@ import { RouterModule } from '@angular/router';
     RouterModule.forRoot([
       {
         path: '',
-        loadChildren: () =>
-          import('@modules/home/home.module').then((m) => m.HomeModule),
+        loadChildren: () => import('@modules/home/home.module'),
       },
       {
         path: 'posts/:id',
-        loadChildren: () =>
-          import('@modules/post-details/post-details.module').then(
-            (m) => m.PostDetailsModule
-          ),
+        loadChildren: () => import('@modules/post-details/post-details.module'),
       },
       {
         path: '**',

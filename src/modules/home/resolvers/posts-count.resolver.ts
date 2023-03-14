@@ -1,20 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { inject } from '@angular/core';
+import { ResolveFn } from '@angular/router';
 import { SettingsService } from '@modules/shared/services/settings.service';
 import { BooruService } from '@modules/shared/services/booru.service';
-import { SearchService } from '@modules/shared/services/search.service';
+import { catchError, of } from 'rxjs';
+import { TagsService } from '@modules/shared/services/tags.service';
 
-@Injectable()
-export class PostsCountResolver implements Resolve<number> {
-  constructor(
-    private searchSvc: SearchService,
-    private booruSvc: BooruService,
-    private settingsSvc: SettingsService
-  ) {}
-
-  resolve() {
-    const tags = this.searchSvc.getSelectedTags();
-    const safeSearch = this.settingsSvc.get('safeSearch');
-    return this.booruSvc.getPostsCount([safeSearch && 'rating:g', ...tags]);
-  }
-}
+export const postsCountResolver: ResolveFn<number> = () => {
+  const tags = inject(TagsService).getSelectedTags();
+  const safeSearch = inject(SettingsService).get('safeSearch');
+  return inject(BooruService)
+    .getPostsCount([safeSearch && 'rating:g', ...tags])
+    .pipe(catchError(() => of(0)));
+};
