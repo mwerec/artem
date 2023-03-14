@@ -10,10 +10,12 @@ $theme: mat.define-dark-theme(
       accent: $accent,
       warn: $warn,
     ),
+    typography: mat.define-typography-config(),
+    density: 0
   )
 );
 
-$app-background-color: #212121; // TODO: maybe #221c30 after slight redesign?
+$app-background-color: #282828;
 $app-text-color: white;
 
 @mixin mobile {
@@ -22,15 +24,37 @@ $app-text-color: white;
   }
 }
 
-@mixin app-backdrop-blur($prefix: ".app-backdrop-blur", $suffix: "") {
-  #{$prefix} {
-    &-base#{$suffix} {
-      background-color: $app-background-color;
-    }
+@mixin frosted-effect-core {
+  :root {
+    --app-frosted-effect-opacity: 0.88;
+    --app-frosted-effect-strength: 60px;
+  }
 
-    &__enabled#{$suffix} {
-      background-color: rgba($app-background-color, 0.95);
-      backdrop-filter: blur(8px);
+  body[app-frosted-effects] {
+    .app-frosted-effect::after,
+    .mat-mdc-dialog-surface {
+      background-color: rgba(
+        $app-background-color,
+        calc(var(--app-frosted-effect-opacity))
+      );
+      backdrop-filter: blur(var(--app-frosted-effect-strength)) saturate(2.1);
+    }
+  }
+
+  body .app-frosted-effect {
+    background-color: transparent;
+
+    &::after {
+      content: "";
+      background-color: $app-background-color;
+      top: 0;
+      left: 0;
+      width: 100%;
+      position: absolute;
+      height: 100%;
+      z-index: -1;
+      border-radius: inherit;
+      overflow: hidden;
     }
   }
 }

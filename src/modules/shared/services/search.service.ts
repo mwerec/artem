@@ -1,44 +1,42 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+interface Query {
+  page: number | null;
+  tag: string[];
+}
+
+@Injectable({ providedIn: 'root' })
 export class SearchService {
-  private selectedTagsSource = new BehaviorSubject<string[]>(
-    new URLSearchParams(window.location.search).getAll('tag')
-  );
-  private suggestedTagsSource = new BehaviorSubject<string[]>([]);
-  private selectedTagsFullSource = new Subject<void>();
-  public selectedTags = this.selectedTagsSource.asObservable();
-  public suggestedTags = this.suggestedTagsSource.asObservable();
-  public selectedTagsFull = this.selectedTagsFullSource.asObservable();
+  private lastSearchSource: BehaviorSubject<Query>;
+  lastSearch: Observable<Query>;
 
-  addTag(tag: string) {
-    if (this.selectedTagsSource.value.length > 1) {
-      this.selectedTagsFullSource.next();
-      return 2;
-    }
-    const newTags = [...this.selectedTagsSource.value, tag];
-    this.selectedTagsSource.next(newTags);
-    return newTags.length;
+  constructor(private router: Router) {
+    const params = new URLSearchParams(window.location.search);
+    const page = Number(params.get('page')) || null;
+    const tag = params.getAll('tag').slice(0, 2);
+
+    this.lastSearchSource = new BehaviorSubject<Query>({ page, tag });
+    this.lastSearch = this.lastSearchSource.asObservable();
   }
 
-  removeTag(tag: string) {
-    const newTags = this.selectedTagsSource.value.filter((t) => t !== tag);
-    this.selectedTagsSource.next(newTags);
-    return newTags.length;
+  search(query: Partial<Query>) {
+    this.lastSearchSource.next({ ...this.getLastSearch(), ...query });
+    this.router.navigate([''], {
+      queryParams: this.getLastSearch(),
+    });
   }
 
-  getSelectedTags() {
-    return this.selectedTagsSource.getValue();
+  /**
+   * Updates search state without triggering navigation/search
+   * Intended for initialization & hard-navigation only
+   */
+  override(query: Query) {
+    this.lastSearchSource.next(query);
   }
 
-  getSuggestedTags() {
-    return this.suggestedTagsSource.getValue();
-  }
-
-  updateSuggestedTags(tags: string[]) {
-    this.suggestedTagsSource.next(tags);
+  getLastSearch() {
+    return this.lastSearchSource.getValue();
   }
 }

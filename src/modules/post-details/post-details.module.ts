@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { PostResolver } from './resolvers/post.resolver';
 import { PostDetailsRoutingModule } from './post-details-routing.module';
 import { PostDetailsComponent } from './post-details.component';
 import { MatChipsModule } from '@angular/material/chips';
@@ -19,7 +18,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatTooltipModule,
     MatSnackBarModule,
   ],
-  declarations: [PostDetailsComponent],
-  providers: [PostResolver],
+  declarations: [PostDetailsComponent]
 })
-export class PostDetailsModule {}
+export default class PostDetailsModule {}

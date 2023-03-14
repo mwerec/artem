@@ -21,18 +21,19 @@
   .tags {
     position: relative;
     max-width: 1200px;
+    padding: 30px 20px 20px;
+    border: 1px solid #545454;
+    border-radius: 4px;
 
     > span {
       position: absolute;
       top: -9px;
       left: 15px;
       font-size: 18px;
+      font-weight: bold;
       background-color: $app-background-color;
       padding: 0 10px;
     }
-
-    padding: 30px 20px 20px;
-    border: 1px solid #545454;
   }
 
   .info {
@@ -47,8 +48,8 @@
       justify-content: center;
       align-items: center;
       border: 1px solid #424242;
-      border-radius: 20px;
-      min-height: 40px;
+      border-radius: 24px;
+      min-height: 48px;
     }
 
     > div {

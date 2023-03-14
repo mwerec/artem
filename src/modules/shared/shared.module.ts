@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BackdropBlurDirective } from './directives/backdrop-blur.directive';
+import { FrostedEffectDirective } from './directives/frosted-effect.directive';
 
 @NgModule({
-  declarations: [BackdropBlurDirective],
-  exports: [BackdropBlurDirective],
+  declarations: [FrostedEffectDirective],
+  exports: [FrostedEffectDirective],
 })
 export class SharedModule {}

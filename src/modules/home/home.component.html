@@ -1,16 +1,9 @@
-<div class="posts" [class.centered]="isListCentered | async">
+<div
+  class="posts"
+  [class.centered]="isListCentered | async"
+  [class.fetching]="isFetchingPage | async"
+>
   <ng-container *ngFor="let post of posts | async">
-    <app-post-preview-box
-      [post]="post"
-    ></app-post-preview-box>
+    <app-post-preview-box [post]="post"></app-post-preview-box>
   </ng-container>
 </div>
-
-<mat-paginator
-  appBackdropBlur
-  hidePageSize
-  showFirstLastButtons
-  [length]="length | async"
-  [pageSize]="100"
-  (page)="onPageChange($event.pageIndex)"
-></mat-paginator>

@@ -3,9 +3,9 @@
   (@settings.start)="onAnimationStart($event)"
   (@settings.done)="onAnimationDone($event)"
   class="settings"
-  appBackdropBlur
+  appFrostedEffect
 >
-  <h1 appBackdropBlur>
+  <h1>
     <button
       mat-icon-button
       color="primary"
@@ -18,40 +18,41 @@
   </h1>
   <form [formGroup]="settingsSvc.form">
     <section>
-      <div class="section-name">Search</div>
+      <h3 class="section-name">Search</h3>
       <div class="options">
         <mat-slide-toggle
           color="primary"
           [checked]="safeSearchChecked | async"
           (click)="onSafeSearchClick($event)"
+          (change)="onSafeSearchChange($event)"
           >Safe search</mat-slide-toggle
         >
       </div>
     </section>
     <section>
-      <div class="section-name">Interface</div>
+      <h3 class="section-name">Interface</h3>
       <div class="options">
         <mat-slide-toggle color="primary" formControlName="blurEffect"
-          >Overlay backdrop blur</mat-slide-toggle
+          >Frosted effect</mat-slide-toggle
         >
         <div>
           <span class="option-name">Preview format</span>
           <mat-radio-group formControlName="previewFormat" color="primary">
             <mat-radio-button value="square">Square</mat-radio-button>
-            <mat-radio-button value="fit">Fit</mat-radio-button>
+            <mat-radio-button value="fit">Original</mat-radio-button>
           </mat-radio-group>
         </div>
         <div *ngIf="settingsSvc.get('previewFormat') === 'square'">
           <span class="option-name">Preview scale</span>
           <mat-slider
-            thumbLabel
-            formControlName="previewScale"
             color="primary"
-            [min]="0.75"
-            [max]="2"
-            [step]="0.25"
+            min="0.75"
+            max="2"
+            step="0.25"
+            showTickMarks
+            discrete
             [displayWith]="formatPreviewScaleLabel"
-          >
+            ><input matSliderThumb formControlName="previewScale" />
           </mat-slider>
         </div>
       </div>
@@ -61,35 +62,33 @@
 
 <ng-template #warningTemplate>
   <h1 mat-dialog-title>Warning</h1>
-  <div mat-dialog-content>
-    <div class="warning-content">
-      <p>Are you sure you want to disable safe search?</p>
-      <p>
-        When safe search is off, you'll see NSFW explicit pictures of violence
-        and pornography.
-      </p>
-      <p>
-        Most weebs have some sort of brain tumor and there is a high risk that,
-        by disabling safe search, you will develop one as well.
-      </p>
-      <p class="warn">Proceed at your own risk, you have been warned.</p>
-      <div class="consents">
-        <mat-checkbox color="warn" #consentCheckbox
-          >I am an adult and I understand the risk</mat-checkbox
-        >
-        <mat-checkbox
-          color="warn"
-          #disableWarningCheckbox
-          [disabled]="!consentCheckbox.checked"
-          >Do not warn me again
-          <span
-            class="amogus"
-            *ngIf="consentCheckbox.checked && disableWarningCheckbox.checked"
-            (click)="onAmogusClick($event)"
-            >sus <span>ඞ</span></span
-          ></mat-checkbox
-        >
-      </div>
+  <div mat-dialog-content class="warning-content">
+    <p>Are you sure you want to disable safe search?</p>
+    <p>
+      When safe search is off, you'll see NSFW explicit pictures of violence and
+      pornography.
+    </p>
+    <p>
+      Most weebs have some sort of brain tumor and there is a high risk that, by
+      disabling safe search, you will develop one as well.
+    </p>
+    <p class="warn">Proceed at your own risk, you have been warned.</p>
+    <div class="consents">
+      <mat-checkbox color="warn" #consentCheckbox
+        >I am an adult and I understand the risk</mat-checkbox
+      >
+      <mat-checkbox
+        color="warn"
+        #disableWarningCheckbox
+        [disabled]="!consentCheckbox.checked"
+        >Do not warn me again
+        <span
+          class="amogus"
+          *ngIf="consentCheckbox.checked && disableWarningCheckbox.checked"
+          (click)="onAmogusClick($event)"
+          >sus <span>ඞ</span></span
+        ></mat-checkbox
+      >
     </div>
   </div>
   <div mat-dialog-actions align="end">
@@ -104,7 +103,7 @@
       Disable safe search
     </button>
     <button
-      mat-raised-button
+      mat-button
       color="primary"
       [mat-dialog-close]
       cdkFocusInitial

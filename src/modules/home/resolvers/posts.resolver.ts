@@ -1,21 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { inject } from '@angular/core';
+import { ResolveFn } from '@angular/router';
 import { SettingsService } from '@modules/shared/services/settings.service';
 import { BooruService } from '@modules/shared/services/booru.service';
-import { SearchService } from '@modules/shared/services/search.service';
 import { BooruPost } from '@modules/shared/types/BooruPost';
+import { catchError, of } from 'rxjs';
+import { SearchService } from '@modules/shared/services/search.service';
 
-@Injectable()
-export class PostsResolver implements Resolve<BooruPost[]> {
-  constructor(
-    private searchSvc: SearchService,
-    private settingsSvc: SettingsService,
-    private booruSvc: BooruService
-  ) {}
-
-  resolve() {
-    const tags = this.searchSvc.getSelectedTags();
-    const safeSearch = this.settingsSvc.get('safeSearch');
-    return this.booruSvc.getPosts([safeSearch && 'rating:g', ...tags]);
-  }
-}
+export const postsResolver: ResolveFn<BooruPost[]> = () => {
+  const { page, tag } = inject(SearchService).getLastSearch();
+  const safeSearch = inject(SettingsService).get('safeSearch');
+  return inject(BooruService)
+    .getPosts([safeSearch && 'rating:g', ...tag], page)
+    .pipe(catchError(() => of([])));
+};

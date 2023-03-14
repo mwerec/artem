@@ -2,15 +2,21 @@
   flex: 1;
   display: flex;
   flex-flow: column nowrap;
+  margin-top: 20px;
 
   .posts {
     display: flex;
     flex-flow: row wrap;
     gap: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 
     &.centered {
       justify-content: center;
+    }
+
+    &.fetching {
+      transition: filter 300ms ease-out 700ms;
+      filter: brightness(0.5);
     }
   }
 

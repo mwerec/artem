@@ -11,10 +11,10 @@ export class BooruService {
 
   constructor(private http: HttpClient) {}
 
-  getPosts(tags: string[], page = 1) {
+  getPosts(tags: string[], page?: number) {
     return this.http.get<BooruPost[]>(`${this.hostname}/posts.json`, {
       params: {
-        page,
+        page: page || 1,
         'post[tags]': tags.filter(Boolean).join(' '),
         limit: 100,
       },
