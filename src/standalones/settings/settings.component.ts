@@ -19,7 +19,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {
+  MatSlideToggleChange,
+  MatSlideToggleModule,
+} from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BehaviorSubject } from 'rxjs';
 import { SharedModule } from '@modules/shared/shared.module';
@@ -85,9 +88,7 @@ export class SettingsComponent {
     private settingsDialogRef: SettingsDialogRef,
     private dialog: MatDialog,
     private overlay: Overlay
-  ) {
-    this.safeSearchChecked.subscribe((v) => console.log(v));
-  }
+  ) {}
 
   // FIXME
   // Workaround for (click).preventDefault() not stopping
@@ -107,7 +108,7 @@ export class SettingsComponent {
     this.dialog
       .open(this.warningTemplate, {
         width: '650px',
-        scrollStrategy: this.overlay.scrollStrategies.noop()
+        scrollStrategy: this.overlay.scrollStrategies.noop(),
       })
       .beforeClosed()
       .subscribe((res) => {
