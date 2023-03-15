@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { PostDetailsRoutingModule } from './post-details-routing.module';
 import { PostDetailsComponent } from './post-details.component';
+import { VideoGlowComponent } from './components/video-glow/video-glow.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +19,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatTooltipModule,
     MatSnackBarModule,
   ],
-  declarations: [PostDetailsComponent]
+  declarations: [PostDetailsComponent, VideoGlowComponent],
 })
 export default class PostDetailsModule {}

@@ -1,18 +1,33 @@
 <h2 *ngIf="!post.large_file_url">File not available</h2>
-<img
-  *ngIf="!isVideo"
-  [src]="post.large_file_url || 'assets/not-found.png'"
-  class="mat-elevation-z9"
-/>
-<video
-  *ngIf="isVideo"
-  [src]="post.large_file_url"
-  class="mat-elevation-z9"
-  controls
-  autoplay
-  loop
-  [muted]="true"
-></video>
+<div class="preview">
+  <ng-container *ngIf="!isVideo">
+    <img
+      [src]="post.large_file_url || 'assets/not-found.png'"
+      class="mat-elevation-z9"
+    />
+    <img
+      *ngIf="frostedEffect | async"
+      [src]="post.large_file_url || 'assets/not-found.png'"
+      class="img-glow"
+    />
+  </ng-container>
+
+  <ng-container *ngIf="isVideo">
+    <video
+      #video
+      [src]="post.large_file_url"
+      class="mat-elevation-z9"
+      controls
+      autoplay
+      loop
+      [muted]="true"
+    ></video>
+    <app-video-glow
+      *ngIf="frostedEffect | async"
+      [video]="video"
+    ></app-video-glow>
+  </ng-container>
+</div>
 
 <div class="info">
   <div matTooltip="Score">
