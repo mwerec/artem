@@ -12,6 +12,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import {
+  catchError,
   debounceTime,
   distinctUntilChanged,
   of,
@@ -48,7 +49,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
         distinctUntilChanged(),
         switchMap((query) => {
           if (!query) return of([]);
-          return this.booruSvc.getTags(query);
+          return this.booruSvc.getTags(query).pipe(catchError(() => of([])));
         }),
         takeUntil(this.unsubscribe)
       )
