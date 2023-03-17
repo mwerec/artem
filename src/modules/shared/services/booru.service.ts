@@ -47,7 +47,6 @@ export class BooruService {
           .pipe(
             // Danbooru API limitations, cant go past page 1000
             map((res) => {
-              console.log('RES BEFORE:', res);
               return res.counts.posts > 100000 ? 100000 : res.counts.posts;
             })
           )
